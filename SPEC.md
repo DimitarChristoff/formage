@@ -3,16 +3,51 @@
 A form is specified in a JSON format, in order to make it easy to maintain, and
 easy to share between front/backend, especially with regards to validation.
 
+Formal builds upon concepts of groups. Even if your form has only a single
+group, it will still expect that group to be specified.
+
+A sample formal spec would look like this:
+
+```json
+[{
+	"type": "main",
+	"title": "Group title",
+	"elements": [{
+		"type": "text",
+		"name": "firstName"
+	}, {
+		"type": "text",
+		"name": "lastName"
+	}]
+}]
+```
+
+## Opinionated? Maybe a little...
+
+Formal will make some assumptions about your forms. For example, when a field
+does not have an id, it will automatically generate an id using the name if
+possible and using a numeric index if no name was provided.
+
 ## Groups
 
-Each form is divided into groups, which in turn hold various elements. More info
-about groups coming soon.
+Each form is divided into groups, which in turn hold various elements.
 
 ## Fields
 
 Within each group, there's an `elements` property. This holds the description
 for each field being used. Below you'll find a list of all field types, and how
 they are built up.
+
+### Options
+
+These options are generic for all field types
+
+- type: Defines what field type you desire
+- id: Id of the field (useful for javascript hooks)
+- name: Name of the field. This will be important for your server-side code
+- defaultValue: Default value to put into the field
+- attributes: An object with key/value pairs for html attributes. Useful for
+	setting placeholders
 
 ### Regular field
 
@@ -44,8 +79,6 @@ Example field specification:
 	"defaultValue": "key1"
 }
 ```
-
-#### Special cases
 
 - **Multiple-value select boxes:** If you have `multiple: true` specified,
 	`defaultValue` can also be specified as an array of keys.
@@ -90,17 +123,17 @@ Example field specification:
 
 ## Dependancies
 
-Sometimes, cases arrise where you want to be able to show an extra section of a
+Sometimes, cases arise where you want to be able to show an extra section of a
 form based on filled in values; to do this, we have a mechanism called
 dependancy groups.
 
 In any given form definition you can add a key called `dependancies`, which
-takes an object containing more field specifications as it's value.
+takes an object containing more group/field specifications as it's value.
 
 ```json
 {
 	"dependancies": {
-		"value to trigger on": {
+		"value to trigger on": [{
 			"type": "inline",
 			"elements": [{
 				"type": "text",
@@ -109,7 +142,7 @@ takes an object containing more field specifications as it's value.
 				"type": "select".
 				...
 			}]
-		}
+		}]
 	}
 }
 ```
