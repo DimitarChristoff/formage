@@ -1,11 +1,16 @@
-    // Base Class for a group of items - this is not meant to be used as a standalone
+/*jshint mootools:true */
+;(function(exports) {
+	'use strict';
+
+	// Base Class for a group of items - this is not meant to be used as a standalone
     // instead, you should `Extends: require('types/qs')` in subclasses.
 
 
     var Settings = require('settings'),
-        QSI = require('qs-controller');
+        QSI = require('formage-controller'),
+	    Formage = require('formage');
 
-    return new Class({
+    Formage.Group = new Class({
 
         Implements: [Options, Events],
 
@@ -82,4 +87,18 @@
         }
     });
 
-});
+
+	if (typeof define === 'function' && define.amd) {
+		define('formage-group', function() {
+			return Formage;
+		});
+	}
+	else if (typeof module === 'object') {
+		module.exports = Formage;
+	}
+	else {
+		exports.Formage = Formage;
+	}
+}(this));
+
+
