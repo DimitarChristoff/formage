@@ -2,8 +2,13 @@
 ;(function(exports) {
 	'use strict';
 
-	var Epitome = require('../vendor/Epitome'),
-		Formage = {};
+	require('../vendor/epitome/src/epitome');
+	require('../vendor/epitome/src/epitome-model-sync');
+	require('../vendor/epitome/src/epitome-collection-sync');
+	require('../vendor/epitome/src/epitome-view');
+	require('../vendor/epitome/src/epitome-storage');
+
+	var Formage = {};
 
 	if (typeof define === 'function' && define.amd) {
 		define('formage', function() {

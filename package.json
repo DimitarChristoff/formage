@@ -1,0 +1,35 @@
+{
+    "name" : "formage",
+    "description" : "Formage. It's not cheese, it does form building.",
+    "homepage": "https://github.com/DimitarChristoff/formage",
+    "version" : "0.0.1",
+    "author" : "Dimitar Christoff <christoff@gmail.com> (https://twitter.com/D_mitar)",
+    "keywords": [
+        "mootools",
+        "epitome",
+        "formage",
+        "forms"
+    ],
+    "contributors": [
+        "Simon Smith",
+        "Chiel Kunkels"
+    ],
+    "scripts" : {
+        "test" : "node_modules/.bin/buster-test -r specification"
+    },
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/DimitarChristoff/formage"
+    },
+    "bugs": {
+        "url": "https://github.com/DimitarChristoff/formage/issues"
+    },
+    "main": "./js/formage.js",
+    "license": "MIT (http://mootools.net/license.txt)",
+    "devDependencies" : {
+        "buster" : ">=0.6.1"
+    },
+    "engines" : {
+        "node" : ">=0.6"
+    }
+}
