@@ -1,23 +1,16 @@
-var loaderError = function(err) {
-	//The errback, error callback
-	//The error has a list of modules that failed
-	console.info(err);
-};
-
-
-require.config({
-	paths: {
-		'mootools': '../../vendor/mootools/mootools-core',
-		'epitome': '../../vendor/epitome/src/main'
-	},
-	shim: {
-		epitome: {
-			exports: 'Epitome',
-			deps: ['mootools']
-		}
-	}
+var requireEpitome = require.config({
+	baseUrl: '../vendor/epitome/src/'
 });
 
-require(['Epitome'], function(e) {
+// this will require main module, isequal and model
+requireEpitome(['main'], function(Epitome) {
 
+	require.config({
+		baseUrl: '../src/'
+	})
+
+	require(['formage'], function(formage) {
+		console.log(formage);
+	});
+	console.log(Object.keys(Epitome));
 });
