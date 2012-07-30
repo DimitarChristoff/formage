@@ -52,7 +52,7 @@
 
 			getValue: function(key) {
 				// try to return a sensible value from enquiry object or local storage
-				var modelVal = App.qs.model && App.qs.model.get(key),
+				var modelVal = this.options.form.retrieve('model') && this.options.form.retrieve('model').get(key),
 					exportedObject = {
 						value: null,
 						error: null
@@ -163,14 +163,15 @@
 
 			grabDependencies: function(element, newElement) {
 
-				var ids = typeOf(element.dependenciesValueTrigger) == 'array' ? element.dependenciesValueTrigger : [element.dependenciesValueTrigger];
+				var ids = typeOf(element.dependenciesValueTrigger) == 'array' ? element.dependenciesValueTrigger : [element.dependenciesValueTrigger],
+					o = this.options;
 
 				ids.each(function(id) {
 					if (!element.dependencies[id])
 						return;
 
 					var Type = element.dependencies[id]['type'].capitalize(),
-						instance = new Formage[Type](element.dependencies[id]['elements'], element.dependencies[id]['title']);
+						instance = new Formage[Type](element.dependencies[id]['elements'], element.dependencies[id]['title'], o);
 
 					newElement.addEvent('change', function() {
 						if (this.retrieve('getValue')() === id) {

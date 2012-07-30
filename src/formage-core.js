@@ -15,7 +15,7 @@
 				id: String.uniqueID()
 			},
 
-			Implements: [Options, Events, Epitome.Storage.sessionStorage()],
+			Implements: [Options, Events],
 
 			modified: false,
 
@@ -66,33 +66,26 @@
 				new Element('button[type=submit][text=Do it]').inject(this.form);
 			},
 
-			setPrivateKey: function() {
-				var key = 'qs' + this.options.page;
-				if (this.options.privateKey === key)
-					return this; // already good.
-
-				// else, page has changed.
-				this.options.privateKey = key;
-
-				// create a new namespaced storage object for the current page.
-				this.setupStorage();
-
-				return this;
-			},
-
 			setupModel: function(obj) {
 				obj = obj || {};
 				obj.id = this.options.id;
 
-				this.model = new Epitome.Model.Sync(obj, {
+				var modelProto = new Class({
+					Extends: Epitome.Model.Sync,
+					Implements: Epitome.Storage.sessionStorage()
+				});
+
+				this.model = new modelProto(obj, {
 					urlRoot: this.options.urlRoot,
 					onChange: function(vals) {
-						// console.log('values changed', vals);
+						this.store();
 					},
 					onSync: function(model) {
 
 					}
 				});
+
+				this.form.store('model', this.model);
 			},
 
 			getManifest: function() {
