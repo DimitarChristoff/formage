@@ -1,7 +1,5 @@
 define(function(require) {
 
-    require('mootools-more');
-
     Locale.define('en-US', 'QS', {
         'PageTitle': 'Welcome to the question set 1',
 

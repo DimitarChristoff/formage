@@ -2,19 +2,23 @@ var requireEpitome = require.config({
 	baseUrl: '../vendor/epitome/src/'
 });
 
+var App = {};
+
 // this will require main module, isequal and model
 requireEpitome(['main'], function(Epitome) {
 
 	require.config({
-		baseUrl: '../src/'
+		baseUrl: '../src/',
+		urlArgs: 'bust=' +  (new Date()).getTime()
 	});
 
 	require(['formage-core'], function(Formage) {
 
-		var i = new Formage(document.id('testform'));
+		App.qs = new Formage(document.id('testform'));
 
-		console.log(i);
-
+		App.qs.setOptions({
+			page: 1
+		}).getManifest();
 	});
 
 });

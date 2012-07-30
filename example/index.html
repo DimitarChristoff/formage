@@ -31,6 +31,19 @@
 
     </div>
 
+    <script type="text/template" id="input-container">
+        <div class='control-group'>
+            <label class='control-label label-large' for='<%=id%>'><%=label%></label>
+            <div class='controls controls-large'>
+                <div id='replaced'></div>
+            </div>
+        </div>
+    </script>
+    <script type="text/template" id="radio-input">
+        <label class='radio inline'>
+            <input type='radio' <%=class%> value='<%=value%>' name='<%=name%>' id='<%=id%>' <%=checked%> /> <%=label%>
+        </label>
+    </script>
     <script src="../vendor/mootools/mootools.js"></script>
     <script src="../vendor/mootools/mootools-more.js"></script>
     <script src="js/require.js" data-main="js/formage-app"></script>

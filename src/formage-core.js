@@ -2,7 +2,6 @@
 ;(function(exports) {
 	'use strict';
 
-
 	var wrap = function(Epitome, Formage) {
 
 		Formage = new Class({
@@ -12,7 +11,7 @@
 				version: 20,
 				path: 'models/{page}/{version}/manifest',
 				useStorage: true,
-				urlRoot: 'scripts/data',
+				urlRoot: 'data',
 				id: String.uniqueID()
 			},
 
@@ -85,7 +84,7 @@
 				obj = obj || {};
 				obj.id = this.options.id;
 
-				this.model = new Epitome.Model(obj, {
+				this.model = new Epitome.Model.Sync(obj, {
 					urlRoot: this.options.urlRoot,
 					onChange: function(vals) {
 						// console.log('values changed', vals);
@@ -98,7 +97,12 @@
 
 			getManifest: function() {
 				var self = this;
-				require([this.options.path.substitute(this.options)], function(manifest) {
+
+				var requireManifests = require.config({
+					baseUrl: './'
+				});
+
+				requireManifests([this.options.path.substitute(this.options)], function(manifest) {
 					self.setupModel();
 					var throwAwayEvent = {
 						sync: function(enquiry) {
@@ -117,13 +121,11 @@
 				// parse the manifest elements.
 				var form = this.form.empty();
 				this.modified = false;
-				this.options.useStorage && this.setPrivateKey();
 
-				Array.each(manifestArray, function(el) {
-					var path = 'modules/types/' + el.type;
-
-					require([path], function(Type) {
-						new Type(el.elements, el.title, {
+				require(['./formage-main'], function(Formage) {
+					Array.each(manifestArray, function(el) {
+						var Type = el.type.capitalize();
+						new Formage[Type](el.elements, el.title, {
 							form: form
 						});
 					});
@@ -140,7 +142,7 @@
 
 	if (typeof define === 'function' && define.amd) {
 		// requires epitome object only.
-		define(['main', './formage', './formage-element'], wrap);
+		define(['main', './formage', './formage-main', './formage-element'], wrap);
 	}
 	else {
 		exports.Formage = wrap(exports.Epitome, exports.Formage);
