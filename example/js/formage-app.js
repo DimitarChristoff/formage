@@ -7,10 +7,14 @@ requireEpitome(['main'], function(Epitome) {
 
 	require.config({
 		baseUrl: '../src/'
-	})
-
-	require(['formage'], function(formage) {
-		console.log(formage);
 	});
-	console.log(Object.keys(Epitome));
+
+	require(['formage-core'], function(Formage) {
+
+		var i = new Formage(document.id('testform'));
+
+		console.log(i);
+
+	});
+
 });
